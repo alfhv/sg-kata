@@ -12,26 +12,26 @@ namespace KataSG.Tests
             var account = new Account();
 
             var deposits = new Random();
-            var deposit1 = deposits.Next(0, 100);
+            var deposit1 = deposits.NextDouble();
             account.Deposit(deposit1);
 
             Assert.AreEqual(deposit1, account.GetBalance());
         }
 
         [Test]
-        public void Should_Process_Deposits()
+        public void Should_Process_Multiple_Deposits()
         {
             var account = new Account();
 
             var deposits = new Random();
 
-            var deposit1 = deposits.Next(0, 100);
+            var deposit1 = deposits.NextDouble();
             account.Deposit(deposit1);
 
-            var deposit2 = deposits.Next(0, 100);
+            var deposit2 = deposits.NextDouble();
             account.Deposit(deposit2);
 
-            var deposit3 = deposits.Next(0, 100);
+            var deposit3 = deposits.NextDouble();
             account.Deposit(deposit3);
 
             Assert.AreEqual(deposit1 + deposit2 + deposit3, account.GetBalance());
@@ -44,21 +44,26 @@ namespace KataSG.Tests
 
             var deposits = new Random();
 
+            // add enough deposits
             var deposit1 = deposits.Next(0, 100);
-            account.Deposit(deposit1);
-
-            // second deposit to ensure balance is not negative
-            var deposit2 = deposits.Next(0, 100);
+            account.Deposit(deposit1);            
+            var deposit2 = deposits.Next(0, 100); 
             account.Deposit(deposit2);
 
-            var withdrawal = deposits.Next(0, 100);
+            // add a positive double to have some decimals
+            var deposit3 = Math.Abs(deposits.NextDouble());
+            account.Deposit(deposit3);
+
+            // ensure withdrawal is positive value
+            var withdrawal = deposits.Next(0, 100); 
             account.Withdrawal(withdrawal);
 
-            Assert.AreEqual(deposit1 + deposit2 - withdrawal, account.GetBalance());
+            // check now
+            Assert.AreEqual(deposit1 + deposit2 + deposit3 - withdrawal, account.GetBalance());
         }
 
         [Test]
-        public void Should_Transfer()
+        public void Should_Process_Transfer_In_Both_Accounts()
         {
             var accountSource = new Account();
             var accountTarget = new Account();

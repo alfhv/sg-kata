@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KataSG
 {
+    /// <summary>
+    /// Only positive amounts expected in all operations
+    /// No error check is done for now as it is not in the scope of this kata
+    /// </summary>
     public class Account
     {
         private List<double> _transactions;
@@ -16,13 +18,29 @@ namespace KataSG
         }
 
         /// <summary>
-        /// Accept positive amounts only, if negative received, it will be converted to positive
-        /// Error could be raised but it is not in the scope of this kata
+        /// 1. Basic account operation (deposit)
+        /// Accept positive amounts only, if negative received it will be converted to positive
         /// </summary>
         /// <param name="amount">P</param>
         public void Deposit(double amount)
         {
-            _transactions.Add(Math.Abs(amount));
+            _transactions.Add(EnsurePositive(amount));
+        }
+
+        /// <summary>
+        /// 1. Basic account operation (withdrawal)
+        /// Only positive amount expected, as in Deposit(), 
+        /// take care of negative convertion just to avoid undesirable effects not handled for now
+        /// </summary>
+        /// <param name="withdrawal"></param>
+        public void Withdrawal(double withdrawal)
+        {
+            _transactions.Add(EnsurePositive(withdrawal) * -1);
+        }
+
+        private double EnsurePositive(double amount)
+        {
+            return Math.Abs(amount);
         }
 
         /// <summary>
@@ -34,19 +52,15 @@ namespace KataSG
             return _transactions.Sum();
         }
 
-        public void TransferTo(Account accountTarget, int transferAmount)
+        /// <summary>
+        /// 2. Transfer to another client in the same bank
+        /// </summary>
+        /// <param name="accountTarget"></param>
+        /// <param name="transferAmount"></param>
+        public void TransferTo(Account accountTarget, double transferAmount)
         {
             Withdrawal(transferAmount);
             accountTarget.Deposit(transferAmount);
-        }
-
-        /// <summary>
-        /// Only positive amount also, as in Deposit(), we take care of negative convertion inside
-        /// </summary>
-        /// <param name="withdrawal"></param>
-        public void Withdrawal(int withdrawal)
-        {
-            _transactions.Add(Math.Abs(withdrawal) * -1);
         }
     }
 }
