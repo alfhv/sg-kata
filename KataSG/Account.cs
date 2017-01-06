@@ -54,6 +54,7 @@ namespace KataSG
 
         /// <summary>
         /// 2. Transfer to another client in the same bank
+        /// (assuming "client" as account)
         /// </summary>
         /// <param name="accountTarget"></param>
         /// <param name="transferAmount"></param>
