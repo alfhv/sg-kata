@@ -1,0 +1,6 @@
+KataSG.Tests/bin/
+packages/
+KataSG/obj/
+KataSG.Tests/obj/
+KataSG/bin/
+.vs/KataSG/v14/.suo
