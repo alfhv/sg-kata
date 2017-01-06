@@ -5,7 +5,7 @@ using System.Linq;
 namespace KataSG
 {
     /// <summary>
-    /// Only positive amounts expected in all operations
+    /// Only positive amounts expected in all operations.
     /// No error check is done for now as it is not in the scope of this kata
     /// </summary>
     public class Account
